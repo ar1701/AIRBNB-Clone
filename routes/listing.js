@@ -17,13 +17,20 @@ const listingController = require("../controller/listing.js");
 //     }
 // };
 
+const multer = require("multer");
+const {storage} = require("../cloudConfig.js")
+const upload = multer({storage});
+
 //Index Route
 router.get("/", listingController.index);
 
 router
   .route("/new")
   .get(isLoggedIn, listingController.newListing)
-  .post(wrapAsync(listingController.createListing));
+  // .post(wrapAsync(listingController.createListing));
+  .post(upload.single('list[image]'), (req,res)=>{
+    res.send(req.file);
+  })
 
 router.route("/:id").get(listingController.showListing);
 

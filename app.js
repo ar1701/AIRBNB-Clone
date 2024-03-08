@@ -1,3 +1,8 @@
+if(process.env.NODE_ENV != "production") {
+  require("dotenv").config(); 
+}
+console.log(process.env.SECRET);
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -11,9 +16,11 @@ const User = require("./models/user.js");
 const LocalStrategy = require("passport-local");
 const passport = require("passport");
 
+
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));

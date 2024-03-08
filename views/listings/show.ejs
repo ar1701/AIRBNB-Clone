@@ -48,9 +48,9 @@
             <div class="mb-3 mt-3">
                 <fieldset class="starability-slot">
                     <input type="radio" id="no-rate" class="input-no-rate"
-                        name="review[rating]" value="0" checked
+                        name="review[rating]" value="1" checked
                         aria-label="No rating." />
-                    <input type="radio" id="first-rate1" name="rating"
+                    <input type="radio" id="first-rate1" name="review[rating]"
                         value="1" />
                     <label for="first-rate1" title="Terrible">1 star</label>
                     <input type="radio" id="first-rate2" name="review[rating]"
@@ -95,8 +95,7 @@
         <div class="card col-5 mr-5 mb-3">
             <div class="card-body">
                 <h5 class="card-title">@<%= review.author.username %></h5>
-                <p class="starability-result card-text"
-                    data-rating="<%= review.rating %>"></p>
+                <p class="starability-result" data-rating="<%= review.rating %>"></p>
                 <p class="card-text"><%= review.comment%></p>
 
             </div>
