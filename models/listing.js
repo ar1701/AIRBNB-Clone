@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 let Schema = mongoose.Schema;
 let Review = require("./review.js");
-const { ref } = require("joi");
+const { ref, string } = require("joi");
 
 const listingSchema = new Schema({
   title: {
@@ -9,7 +9,10 @@ const listingSchema = new Schema({
     required: true,
   },
   description: String,
-  image: String,
+  image: {
+    url: String,
+    flename: String,
+  },
   price: Number,
   location: String,
   country: String,
