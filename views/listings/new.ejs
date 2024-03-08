@@ -6,15 +6,15 @@
 
     <div class="row mt-3">
         <div class="col-8 offset-2">
-            <form action="/listings/new" method="post" class="needs-validation" novalidate>
+            <form action="/listings/new" method="post" class="needs-validation"
+                novalidate>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
                     <input type="text" name="list[title]"
                         placeholder="Enter Title"
                         id="title" class="form-control" required>
-                        <div class="valid-feedback">Title Looks Good</div>
+                    <div class="valid-feedback">Title Looks Good</div>
                 </div>
-               
 
                 <div class="mb-3">
                     <label for="des">Description:</label>
@@ -34,27 +34,26 @@
                     <input type="number" name="list[price]"
                         placeholder="Enter Price"
                         id="price" class="form-control" required>
-                        <div class="invalid-feedback">price</div>
+                    <div class="invalid-feedback">price</div>
                 </div>
-                
+
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="loc">Location:</label>
                         <input type="text" name="list[location]"
                             placeholder="Enter Location" id="loc"
                             class="form-control" required>
-                            <div class="invalid-feedback">location</div>
+                        <div class="invalid-feedback">location</div>
                     </div>
-    
+
                     <div class="mb-3 col-md-8">
                         <label for="country">country:</label>
                         <input type="text" name="list[country]"
                             placeholder="Enter Country"
                             id="counter" class="form-control" required>
-                            <div class="invalid-feedback">country</div>
+                        <div class="invalid-feedback">country</div>
                     </div>
                 </div>
-               
 
                 <button class="btn btn-dark add-btn">Add</button>
                 <br><br>

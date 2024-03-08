@@ -3,6 +3,8 @@ const router = express.Router();
 const Listing = require("../models/listing.js");
 let wrapAsync = require("../utils/wrapAsync.js");
 let ExpressError = require("../utils/ExpressError.js");
+const { isLoggedIn, isOwner } = require("../middleware.js");
+const listingController = require("../controller/listing.js");
 // const {listingSchema} = require("./schema.js");
 
 // const validateListing = (req,res,next)=>{
@@ -16,56 +18,26 @@ let ExpressError = require("../utils/ExpressError.js");
 // };
 
 //Index Route
-router.get("/", async (req, res) => {
-  const listings = await Listing.find({});
-  res.render("./listings/index.ejs", { listings });
-});
+router.get("/", listingController.index);
 
-//New Route
-router.get("/new", (req, res) => {
-  res.render("./listings/new.ejs");
-});
+router
+  .route("/new")
+  .get(isLoggedIn, listingController.newListing)
+  .post(wrapAsync(listingController.createListing));
 
-//Show Route
-router.get("/:id", async (req, res) => {
-  let { id } = req.params;
-  const data = await Listing.findById(id).populate("reviews");
-  res.render("./listings/show.ejs", { data });
-});
+router.route("/:id").get(listingController.showListing);
 
-//Create route
-router.post(
-  "/new",
-  wrapAsync(async (req, res, next) => {
-    let newList = new Listing(req.body.list);
-    await newList.save();
-    req.flash("success", "New Listing Created!");
-    res.redirect("/listings");
-  })
-);
-
-//Update Route-GET
-router.get(
-  "/:id/edit",
-  wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let data = await Listing.findById(id);
-    res.render("./listings/edit.ejs", { data });
-  })
-);
-
-//Update Route-PUT
-router.put("/:id/edit", async (req, res) => {
-  let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.list });
-  res.redirect("/listings");
-});
+router
+  .route("/:id/edit")
+  .get(isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm))
+  .put(isLoggedIn, isOwner, listingController.updateListing);
 
 //Delete Route
-router.delete("/:id/delete", async (req, res) => {
-  let { id } = req.params;
-  await Listing.findByIdAndDelete(id);
-  res.redirect("/listings");
-});
+router.delete(
+  "/:id/delete",
+  isLoggedIn,
+  isOwner,
+  listingController.deleteListing
+);
 
 module.exports = router;
